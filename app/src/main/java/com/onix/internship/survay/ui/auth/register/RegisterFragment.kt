@@ -1,19 +1,36 @@
 package com.onix.internship.survay.ui.auth.register
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.onix.internship.survay.R
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.NavDirections
+import androidx.navigation.fragment.findNavController
+import com.onix.internship.survay.databinding.FragmentRegisterBinding
 
 class RegisterFragment : Fragment() {
+    private lateinit var binding: FragmentRegisterBinding
+    private val viewModel: RegisterViewModel by viewModels ()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_register, container, false)
+    ): View {
+        binding = FragmentRegisterBinding.inflate(inflater)
+        return binding.root
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
+        viewModel.navigationEvent.observe(viewLifecycleOwner, ::navigate)
+    }
+
+    private fun navigate(direction: NavDirections) {
+        findNavController().navigate(direction)
+    }
+
 }

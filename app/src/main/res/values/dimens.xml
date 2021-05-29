@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="login_layout_padding">32dp</dimen>
+    <dimen name="register_text_size">32sp</dimen>
+    <dimen name="register_margin_guideline_vertical">8dp</dimen>
+    <dimen name="login_text_size">32sp</dimen>
+</resources>

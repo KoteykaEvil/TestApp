@@ -6,12 +6,13 @@ import com.onix.internship.survay.ui.auth.login.LoginFragment
 import com.onix.internship.survay.ui.auth.register.RegisterFragment
 
 class AuthAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
-    override fun getItemCount(): Int = 2
+    override fun getItemCount(): Int = TabFragmentsList.values().size
 
     override fun createFragment(position: Int): Fragment {
-        return when (position) {
-            0 -> LoginFragment()
-            else -> RegisterFragment()
-        }
+        return TabFragmentsList.values()[position].fragment
     }
+}
+
+enum class TabFragmentsList(val fragment: Fragment) {
+    LoginFragment(LoginFragment()), RegisterFragment(RegisterFragment())
 }

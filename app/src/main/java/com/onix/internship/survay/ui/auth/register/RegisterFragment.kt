@@ -9,10 +9,15 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.onix.internship.survay.databinding.FragmentRegisterBinding
+import com.onix.internship.survay.db.local.SurvayDatabase
 
 class RegisterFragment : Fragment() {
     private lateinit var binding: FragmentRegisterBinding
-    private val viewModel: RegisterViewModel by viewModels()
+    private val viewModel: RegisterViewModel by viewModels {
+        RegisterViewModelFactory(
+            SurvayDatabase.getInstance(requireContext())
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

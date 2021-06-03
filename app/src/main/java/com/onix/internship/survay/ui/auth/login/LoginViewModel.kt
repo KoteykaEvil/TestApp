@@ -3,13 +3,19 @@ package com.onix.internship.survay.ui.auth.login
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavDirections
+import com.onix.internship.survay.arch.appflow.Roles
 import com.onix.internship.survay.arch.error.ErrorStates
 import com.onix.internship.survay.arch.lifecycle.SingleLiveEvent
-import java.math.BigInteger
-import java.security.MessageDigest
+import com.onix.internship.survay.db.local.SurvayDatabase
+import com.onix.internship.survay.db.security.md5
+import com.onix.internship.survay.ui.auth.AuthFragmentDirections
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.lang.Exception
 
-class LoginViewModel : ViewModel() {
+class LoginViewModel(private val database: SurvayDatabase) : ViewModel() {
     val model = LoginModel()
 
     private val _navigationEvent = SingleLiveEvent<NavDirections>()
@@ -26,18 +32,38 @@ class LoginViewModel : ViewModel() {
         model.apply {
             _loginError.value = isLoginCorrect()
             _passwordError.value = isPasswordCorrect()
-            if(isCorrect()){
+            if (isCorrect()) {
                 login()
             }
         }
     }
 
     private fun login() {
-        // next validation || send to server
+        viewModelScope.launch(Dispatchers.IO) {
+            model.apply {
+                val userList = database.userDao.get(username, md5(password))
+                when {
+                    userList.isEmpty() -> {
+                        incorrectLoginOrPassword()
+                    }
+                    userList.size == 1 -> {
+                        when (userList[0].getRoleState()){
+                            Roles.ADMIN -> _navigationEvent.postValue(AuthFragmentDirections.actionAuthFragmentToAdminFragment())
+                            Roles.MANAGER -> _navigationEvent.postValue(AuthFragmentDirections.actionAuthFragmentToTestListFragment())
+                            Roles.USER -> _navigationEvent.postValue(AuthFragmentDirections.actionAuthFragmentToTestListFragment())
+                            else -> incorrectLoginOrPassword() // problem with registration.
+                        }
+                    }
+
+                    else -> throw Exception("что-то пошло по пизде, бд накрылась")
+                }
+            }
+        }
     }
 
-    private fun md5(password: String): String {
-        val md = MessageDigest.getInstance("MD5")
-        return BigInteger(1, md.digest(password.toByteArray())).toString(16).padStart(32, '0')
+    private fun incorrectLoginOrPassword(){
+        _loginError.postValue(ErrorStates.INCORRECT_DATA)
+        _passwordError.postValue(ErrorStates.INCORRECT_DATA)
     }
+
 }

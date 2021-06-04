@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@+id/authFragment">
+    app:startDestination="@+id/stubFragment">
 
     <fragment
         android:id="@+id/authFragment"
@@ -23,4 +23,18 @@
         android:id="@+id/testListFragment"
         android:name="com.onix.internship.survay.ui.tests.TestListFragment"
         android:label="TestListFragment" />
+    <fragment
+        android:id="@+id/stubFragment"
+        android:name="com.onix.internship.survay.ui.stub.StubFragment"
+        android:label="StubFragment" >
+        <action
+            android:id="@+id/action_stubFragment_to_authFragment"
+            app:destination="@id/authFragment" />
+        <action
+            android:id="@+id/action_stubFragment_to_adminFragment"
+            app:destination="@id/adminFragment" />
+        <action
+            android:id="@+id/action_stubFragment_to_testListFragment"
+            app:destination="@id/testListFragment" />
+    </fragment>
 </navigation>

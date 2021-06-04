@@ -9,12 +9,15 @@ import com.onix.internship.survay.arch.appflow.Roles
 import com.onix.internship.survay.arch.error.ErrorStates
 import com.onix.internship.survay.arch.lifecycle.SingleLiveEvent
 import com.onix.internship.survay.db.local.SurvayDatabase
-import com.onix.internship.survay.db.security.md5
+import com.onix.internship.survay.db.local.tables.users.User
+import com.onix.internship.survay.db.login.Login
+import com.onix.internship.survay.db.sharedpreferences.SharedPrefs
 import com.onix.internship.survay.ui.auth.AuthFragmentDirections
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class LoginViewModel(private val database: SurvayDatabase) : ViewModel() {
+class LoginViewModel(private val database: SurvayDatabase, private val sharedPrefs: SharedPrefs) :
+    ViewModel() {
     val model = LoginModel()
 
     private val _navigationEvent = SingleLiveEvent<NavDirections>()
@@ -37,22 +40,21 @@ class LoginViewModel(private val database: SurvayDatabase) : ViewModel() {
         }
     }
 
+
     private fun login() {
         viewModelScope.launch(Dispatchers.IO) {
-            model.apply {
-                val userList = database.userDao.get(username, md5(password))
-                userList.apply {
-                    try {
-                        when (first().getRoleState()) {
-                            Roles.ADMIN -> _navigationEvent.postValue(AuthFragmentDirections.actionAuthFragmentToAdminFragment())
-                            Roles.MANAGER -> _navigationEvent.postValue(AuthFragmentDirections.actionAuthFragmentToTestListFragment())
-                            Roles.USER -> _navigationEvent.postValue(AuthFragmentDirections.actionAuthFragmentToTestListFragment())
-                            else -> incorrectLoginOrPassword() // problem with registration.
-                        }
-                    } catch (e: NoSuchElementException) {
-                        incorrectLoginOrPassword()
-                    }
-                }
+            val res = Login().login(
+                User(
+                    username = model.username,
+                    passwordHash = model.password
+                ), database
+            )
+            if(res.index > 0) sharedPrefs.saveToSharedPrefs(model.username,model.password)
+            when (res) {
+                Roles.ADMIN -> _navigationEvent.postValue(AuthFragmentDirections.actionAuthFragmentToAdminFragment())
+                Roles.MANAGER -> _navigationEvent.postValue(AuthFragmentDirections.actionAuthFragmentToTestListFragment())
+                Roles.USER -> _navigationEvent.postValue(AuthFragmentDirections.actionAuthFragmentToTestListFragment())
+                else -> incorrectLoginOrPassword() // problem with registration or incorrect data
             }
         }
     }

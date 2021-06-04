@@ -1,21 +1,21 @@
-package com.onix.internship.survay.ui.auth.register
+package com.onix.internship.survay.ui.stub
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
-import com.onix.internship.survay.databinding.FragmentRegisterBinding
+import com.onix.internship.survay.databinding.FragmentStubBinding
 import com.onix.internship.survay.db.local.SurvayDatabase
 import com.onix.internship.survay.db.sharedpreferences.SharedPrefs
 
-class RegisterFragment : Fragment() {
-    private lateinit var binding: FragmentRegisterBinding
-    private val viewModel: RegisterViewModel by viewModels {
-        RegisterViewModelFactory(
+class StubFragment : Fragment() {
+    private lateinit var binding: FragmentStubBinding
+    private val viewModel: StubViewModel by viewModels{
+        StubViewModelFactory(
             SurvayDatabase.getInstance(requireContext()),
             SharedPrefs(requireContext())
         )
@@ -25,7 +25,7 @@ class RegisterFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentRegisterBinding.inflate(inflater)
+        binding = FragmentStubBinding.inflate(inflater)
         return binding.root
     }
 
@@ -39,5 +39,4 @@ class RegisterFragment : Fragment() {
     private fun navigate(direction: NavDirections) {
         findNavController().navigate(direction)
     }
-
 }

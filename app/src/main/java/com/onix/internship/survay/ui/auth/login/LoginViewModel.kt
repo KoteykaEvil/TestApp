@@ -13,7 +13,6 @@ import com.onix.internship.survay.db.security.md5
 import com.onix.internship.survay.ui.auth.AuthFragmentDirections
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.lang.Exception
 
 class LoginViewModel(private val database: SurvayDatabase) : ViewModel() {
     val model = LoginModel()
@@ -42,26 +41,23 @@ class LoginViewModel(private val database: SurvayDatabase) : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             model.apply {
                 val userList = database.userDao.get(username, md5(password))
-                when {
-                    userList.isEmpty() -> {
-                        incorrectLoginOrPassword()
-                    }
-                    userList.size == 1 -> {
-                        when (userList[0].getRoleState()){
+                userList.apply {
+                    try {
+                        when (first().getRoleState()) {
                             Roles.ADMIN -> _navigationEvent.postValue(AuthFragmentDirections.actionAuthFragmentToAdminFragment())
                             Roles.MANAGER -> _navigationEvent.postValue(AuthFragmentDirections.actionAuthFragmentToTestListFragment())
                             Roles.USER -> _navigationEvent.postValue(AuthFragmentDirections.actionAuthFragmentToTestListFragment())
                             else -> incorrectLoginOrPassword() // problem with registration.
                         }
+                    } catch (e: NoSuchElementException) {
+                        incorrectLoginOrPassword()
                     }
-
-                    else -> throw Exception("что-то пошло по пизде, бд накрылась")
                 }
             }
         }
     }
 
-    private fun incorrectLoginOrPassword(){
+    private fun incorrectLoginOrPassword() {
         _loginError.postValue(ErrorStates.INCORRECT_DATA)
         _passwordError.postValue(ErrorStates.INCORRECT_DATA)
     }

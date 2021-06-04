@@ -9,10 +9,17 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.onix.internship.survay.databinding.FragmentLoginBinding
+import com.onix.internship.survay.db.local.SurvayDatabase
+import com.onix.internship.survay.db.sharedpreferences.SharedPrefs
 
 class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
-    private val viewModel: LoginViewModel by viewModels()
+    private val viewModel: LoginViewModel by viewModels {
+        LoginViewModelFactory(
+            SurvayDatabase.getInstance(requireContext()),
+            SharedPrefs(requireContext())
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

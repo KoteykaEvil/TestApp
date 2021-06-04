@@ -61,6 +61,7 @@
             app:layout_constraintBottom_toTopOf="@+id/login_confirm_button"
             app:layout_constraintHorizontal_bias="0.5"
             app:showError="@{viewModel.passwordError}"
+            app:passwordToggleEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/login_name_container">
@@ -71,6 +72,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
+                android:inputType="textPassword"
                 android:hint="@string/text_edit_password_hint"
                 android:singleLine="true" />
         </com.google.android.material.textfield.TextInputLayout>

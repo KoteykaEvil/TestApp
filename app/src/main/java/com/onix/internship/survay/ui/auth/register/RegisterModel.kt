@@ -1,6 +1,8 @@
 package com.onix.internship.survay.ui.auth.register
 
 import com.onix.internship.survay.arch.error.ErrorStates
+import com.onix.internship.survay.db.local.tables.users.User
+import com.onix.internship.survay.db.security.md5
 
 data class RegisterModel(
     var name: String = "",
@@ -55,6 +57,15 @@ data class RegisterModel(
                 username.isNotEmpty() &&
                 password.isNotEmpty() &&
                 password == passwordConfirm
+    }
+
+    fun toUser(): User {
+        return User(
+            name = name,
+            surname = surname,
+            username = username,
+            passwordHash = md5(password)
+        )
     }
 
 

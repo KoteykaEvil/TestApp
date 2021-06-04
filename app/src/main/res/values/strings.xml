@@ -13,7 +13,7 @@
     <string name="register_password_hint">Enter password</string>
     <string name="register_confirm_password_hint">Confirm password</string>
     <string name="login_confirm_button">Connect</string>
-    <string name="incorrect_data">Incorrect data</string>
+    <string name="incorrect_data">Username or password entered incorrectly</string>
     <string name="user_already_registered">This nickname is already taken. Choose another</string>
     <string name="empty_field">Empty field</string>
     <string name="passwords_unconfirmed">Passwords must be the same</string>

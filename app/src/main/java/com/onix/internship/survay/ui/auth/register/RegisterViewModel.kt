@@ -3,11 +3,19 @@ package com.onix.internship.survay.ui.auth.register
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavDirections
+import com.onix.internship.survay.arch.appflow.Roles
 import com.onix.internship.survay.arch.error.ErrorStates
 import com.onix.internship.survay.arch.lifecycle.SingleLiveEvent
+import com.onix.internship.survay.db.local.SurvayDatabase
+import com.onix.internship.survay.db.local.tables.users.User
+import com.onix.internship.survay.db.sharedpreferences.SharedPrefs
+import com.onix.internship.survay.ui.auth.AuthFragmentDirections
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class RegisterViewModel : ViewModel() {
+class RegisterViewModel(private val database: SurvayDatabase, private val sharedPrefs: SharedPrefs) : ViewModel() {
     val model = RegisterModel()
 
     private val _navigationEvent = SingleLiveEvent<NavDirections>()
@@ -44,6 +52,21 @@ class RegisterViewModel : ViewModel() {
     }
 
     private fun registerUser() {
+        viewModelScope.launch(Dispatchers.IO) {
+            model.apply {
+                if (database.userDao.getUsers(username).isNotEmpty()) usernameIsAlreadyExist()
+                else {
+                    val user : User = toUser()
+                    user.role = if (database.userDao.getAllUsers().isEmpty()) Roles.ADMIN.index else Roles.USER.index
+                    sharedPrefs.saveToSharedPrefs(user.username,user.passwordHash)
+                    database.userDao.insert(user)
+                    _navigationEvent.postValue(AuthFragmentDirections.actionAuthFragmentToTestListFragment())
+                }
+            }
+        }
+    }
 
+    private fun usernameIsAlreadyExist() {
+        _usernameError.postValue(ErrorStates.USER_ALREADY_REGISTERED)
     }
 }

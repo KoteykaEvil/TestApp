@@ -22,7 +22,7 @@ class StubViewModel(val database: SurvayDatabase, private val sharedPrefs: Share
 
     init {
         getSavedData()
-        if (model.username.isNotEmpty())
+        if (model.login.isNotEmpty())
             login()
         else navToLoginFragment()
     }

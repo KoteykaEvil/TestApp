@@ -63,8 +63,8 @@ data class RegisterModel(
         return User(
             name = name,
             surname = surname,
-            username = username,
-            passwordHash = md5(password)
+            login = username,
+            password = md5(password)
         )
     }
 

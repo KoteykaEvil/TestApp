@@ -8,16 +8,16 @@ import com.onix.internship.survay.arch.appflow.Roles
 @Entity(tableName = "users")
 data class User(
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "userId")
-    var userId: Long = 0L,
-    @ColumnInfo(name = "name")
-    var name: String = "",
-    @ColumnInfo(name = "surname")
-    var surname: String = "",
+    @ColumnInfo(name = "id")
+    var id: Int = 0,
     @ColumnInfo(name = "login")
-    var username: String = "",
+    var login: String = "",
     @ColumnInfo(name = "password")
-    var passwordHash: String = "",
+    var password: String = "",
+    @ColumnInfo(name = "first_name")
+    var name: String = "",
+    @ColumnInfo(name = "last_name")
+    var surname: String = "",
     @ColumnInfo(name = "role")
     var role: Int = -1
 ){

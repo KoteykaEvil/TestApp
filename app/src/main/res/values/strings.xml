@@ -17,6 +17,8 @@
     <string name="user_already_registered">This nickname is already taken. Choose another</string>
     <string name="empty_field">Empty field</string>
     <string name="passwords_unconfirmed">Passwords must be the same</string>
+    <string name="stub_text_loading">Loading...</string>
+    <string name="log_out">Log out</string>
 
     <string-array name="tab_strings">
         <item>Login</item>

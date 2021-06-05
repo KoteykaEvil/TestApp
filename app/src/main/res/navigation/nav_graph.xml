@@ -22,7 +22,11 @@
     <fragment
         android:id="@+id/testListFragment"
         android:name="com.onix.internship.survay.ui.tests.TestListFragment"
-        android:label="TestListFragment" />
+        android:label="TestListFragment" >
+        <action
+            android:id="@+id/action_testListFragment_to_stubFragment"
+            app:destination="@id/stubFragment" />
+    </fragment>
     <fragment
         android:id="@+id/stubFragment"
         android:name="com.onix.internship.survay.ui.stub.StubFragment"

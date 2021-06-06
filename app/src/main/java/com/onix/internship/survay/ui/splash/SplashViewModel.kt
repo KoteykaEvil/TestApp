@@ -1,4 +1,4 @@
-package com.onix.internship.survay.ui.stub
+package com.onix.internship.survay.ui.splash
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -13,7 +13,7 @@ import com.onix.internship.survay.db.sharedpreferences.SharedPrefs
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class StubViewModel(val database: SurvayDatabase, private val sharedPrefs: SharedPrefs) :
+class SplashViewModel(val database: SurvayDatabase, private val sharedPrefs: SharedPrefs) :
     ViewModel() {
     private var model = User()
 
@@ -21,6 +21,10 @@ class StubViewModel(val database: SurvayDatabase, private val sharedPrefs: Share
     val navigationEvent: LiveData<NavDirections> = _navigationEvent
 
     init {
+        tryToLogin()
+    }
+
+    fun tryToLogin(){
         getSavedData()
         if (model.login.isNotEmpty())
             login()
@@ -28,7 +32,7 @@ class StubViewModel(val database: SurvayDatabase, private val sharedPrefs: Share
     }
 
     private fun navToLoginFragment() {
-        _navigationEvent.postValue(StubFragmentDirections.actionStubFragmentToAuthFragment())
+        _navigationEvent.postValue(SplashFragmentDirections.actionSplashFragmentToAuthFragment())
     }
 
     private fun getSavedData() {
@@ -43,9 +47,9 @@ class StubViewModel(val database: SurvayDatabase, private val sharedPrefs: Share
             )
 
             when (res) {
-                Roles.ADMIN -> _navigationEvent.postValue(StubFragmentDirections.actionStubFragmentToAdminFragment())
-                Roles.MANAGER -> _navigationEvent.postValue(StubFragmentDirections.actionStubFragmentToTestListFragment())
-                Roles.USER -> _navigationEvent.postValue(StubFragmentDirections.actionStubFragmentToTestListFragment())
+                Roles.ADMIN -> _navigationEvent.postValue(SplashFragmentDirections.actionSplashFragmentToAdminFragment())
+                Roles.MANAGER -> _navigationEvent.postValue(SplashFragmentDirections.actionSplashFragmentToTestListFragment())
+                Roles.USER -> _navigationEvent.postValue(SplashFragmentDirections.actionSplashFragmentToTestListFragment())
                 else -> navToLoginFragment()
             }
         }

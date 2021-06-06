@@ -1,4 +1,4 @@
-package com.onix.internship.survay.ui.stub
+package com.onix.internship.survay.ui.splash
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,14 +8,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
-import com.onix.internship.survay.databinding.FragmentStubBinding
+import com.onix.internship.survay.databinding.FragmentSplashBinding
 import com.onix.internship.survay.db.local.SurvayDatabase
 import com.onix.internship.survay.db.sharedpreferences.SharedPrefs
 
-class StubFragment : Fragment() {
-    private lateinit var binding: FragmentStubBinding
-    private val viewModel: StubViewModel by viewModels{
-        StubViewModelFactory(
+class SplashFragment : Fragment() {
+    private lateinit var binding: FragmentSplashBinding
+    private val viewModel: SplashViewModel by viewModels{
+        SplashViewModelFactory(
             SurvayDatabase.getInstance(requireContext()),
             SharedPrefs(requireContext())
         )
@@ -25,7 +25,7 @@ class StubFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentStubBinding.inflate(inflater)
+        binding = FragmentSplashBinding.inflate(inflater)
         return binding.root
     }
 
@@ -38,5 +38,10 @@ class StubFragment : Fragment() {
 
     private fun navigate(direction: NavDirections) {
         findNavController().navigate(direction)
+    }
+
+    override fun onResume() {
+        viewModel.tryToLogin()
+        super.onResume()
     }
 }

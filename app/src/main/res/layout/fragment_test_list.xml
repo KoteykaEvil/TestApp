@@ -26,23 +26,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text=" TestsScreen "
+            android:text="@string/tests_screen"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/login_confirm_button"
-            style="@style/connect_button_style"
-            android:layout_height="38dp"
-            android:onClick="@{()->viewModel.onLogOutClick()}"
-            android:text="@string/log_out"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/disconnectGuideline" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -19,6 +19,7 @@
     <string name="passwords_unconfirmed">Passwords must be the same</string>
     <string name="stub_text_loading">Loading...</string>
     <string name="log_out">Log out</string>
+    <string name="tests_screen">TestsScreen</string>
 
     <string-array name="tab_strings">
         <item>Login</item>

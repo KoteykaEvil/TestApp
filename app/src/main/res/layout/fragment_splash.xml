@@ -5,13 +5,13 @@
     <data>
         <variable
             name="viewModel"
-            type="com.onix.internship.survay.ui.stub.StubViewModel" />
+            type="com.onix.internship.survay.ui.splash.SplashViewModel" />
     </data>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.stub.StubFragment">
+        tools:context=".ui.splash.SplashFragment">
 
         <TextView
             android:layout_gravity="center"

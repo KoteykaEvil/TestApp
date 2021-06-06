@@ -20,6 +20,11 @@
     <string name="stub_text_loading">Loading...</string>
     <string name="log_out">Log out</string>
     <string name="tests_screen">TestsScreen</string>
+    <string name="test_1">Test 1</string>
+    <string name="description">Description</string>
+    <string name="yes">Yes</string>
+    <string name="cancel">Cancel</string>
+    <string name="exit_msg_title">Are u sure for exit?</string>
 
     <string-array name="tab_strings">
         <item>Login</item>

@@ -77,7 +77,7 @@ class TestListFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_main, menu);
+        inflater.inflate(R.menu.menu_main, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -109,7 +109,7 @@ class TestListFragment : Fragment() {
     }
 
     private fun showAreYouSureDialog() {
-        activity?.let {
+        requireActivity().let {
             val builder = AlertDialog.Builder(it)
             builder.apply {
                 setMessage(R.string.exit_msg_title)
@@ -125,7 +125,7 @@ class TestListFragment : Fragment() {
                 }
             }
             builder.create()
-        }?.show()
+        }.show()
     }
 
 }

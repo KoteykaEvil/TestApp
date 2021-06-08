@@ -64,7 +64,7 @@ class AuthFragment : Fragment() {
     }
 
     private fun showAreYouSureDialog() {
-        activity?.let {
+        requireActivity().let {
             val builder = AlertDialog.Builder(it)
             builder.apply {
                 setMessage(R.string.exit_msg_title)
@@ -80,7 +80,7 @@ class AuthFragment : Fragment() {
                 }
             }
             builder.create()
-        }?.show()
+        }.show()
     }
 
 }

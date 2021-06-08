@@ -45,11 +45,11 @@ class LoginViewModel(private val database: SurvayDatabase, private val sharedPre
         viewModelScope.launch(Dispatchers.IO) {
             val res = Login().login(
                 User(
-                    username = model.username,
-                    passwordHash = model.password
+                    login = model.login,
+                    password = model.password
                 ), database
             )
-            if(res.index > 0) sharedPrefs.saveToSharedPrefs(model.username,model.password)
+            if(res.index >= 0) sharedPrefs.saveToSharedPrefs(model.login,model.password)
             when (res) {
                 Roles.ADMIN -> _navigationEvent.postValue(AuthFragmentDirections.actionAuthFragmentToAdminFragment())
                 Roles.MANAGER -> _navigationEvent.postValue(AuthFragmentDirections.actionAuthFragmentToTestListFragment())

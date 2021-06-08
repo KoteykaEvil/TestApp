@@ -3,7 +3,6 @@ package com.onix.internship.survay.db.sharedpreferences
 import android.content.Context
 import android.content.SharedPreferences
 import com.onix.internship.survay.db.local.tables.users.User
-import com.onix.internship.survay.ui.stub.StubModel
 
 class SharedPrefs(context: Context) {
 
@@ -28,8 +27,8 @@ class SharedPrefs(context: Context) {
         val name = sharedPref.getString(keyLogin, "") ?: ""
         val title = sharedPref.getString(keyPassword, "") ?: ""
         return User(
-            username = name,
-            passwordHash = title,
+            login = name,
+            password = title,
         )
     }
 

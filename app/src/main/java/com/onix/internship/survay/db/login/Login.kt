@@ -8,7 +8,7 @@ import com.onix.internship.survay.db.security.md5
 class Login() {
     suspend fun login(model: User, database: SurvayDatabase): Roles {
         model.apply {
-            val userList = database.userDao.get(username, md5(passwordHash))
+            val userList = database.userDao.get(login, md5(password))
             userList.apply {
                 return try {
                     first().getRoleState()

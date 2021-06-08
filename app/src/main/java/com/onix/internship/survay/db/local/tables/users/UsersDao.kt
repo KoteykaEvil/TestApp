@@ -16,7 +16,7 @@ interface UsersDao {
     @Query("SELECT * from users WHERE login = :login AND password = :password")
     suspend fun get(login: String, password: String): List<User>
 
-    @Query("SELECT * FROM users ORDER BY userId ASC")
+    @Query("SELECT * FROM users ORDER BY id ASC")
     suspend fun getAllUsers(): List<User>
 
     @Update

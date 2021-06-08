@@ -45,7 +45,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/login_name_field"
-                android:text="@={viewModel.model.username}"
+                android:text="@={viewModel.model.login}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/edit_text_name_hint"

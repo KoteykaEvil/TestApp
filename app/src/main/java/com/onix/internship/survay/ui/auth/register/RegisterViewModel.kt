@@ -58,7 +58,7 @@ class RegisterViewModel(private val database: SurvayDatabase, private val shared
                 else {
                     val user : User = toUser()
                     user.role = if (database.userDao.getAllUsers().isEmpty()) Roles.ADMIN.index else Roles.USER.index
-                    sharedPrefs.saveToSharedPrefs(user.username,user.passwordHash)
+                    sharedPrefs.saveToSharedPrefs(username,password)
                     database.userDao.insert(user)
                     _navigationEvent.postValue(AuthFragmentDirections.actionAuthFragmentToTestListFragment())
                 }

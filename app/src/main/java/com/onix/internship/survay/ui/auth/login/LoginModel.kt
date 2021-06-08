@@ -2,10 +2,10 @@ package com.onix.internship.survay.ui.auth.login
 
 import com.onix.internship.survay.arch.error.ErrorStates
 
-data class LoginModel(var username: String = "", var password: String = "") {
+data class LoginModel(var login: String = "", var password: String = "") {
 
     fun isLoginCorrect(): ErrorStates {
-        return if (username.isNotEmpty()) ErrorStates.NONE else ErrorStates.EMPTY_FIELD
+        return if (login.isNotEmpty()) ErrorStates.NONE else ErrorStates.EMPTY_FIELD
     }
 
     fun isPasswordCorrect(): ErrorStates {
@@ -13,7 +13,7 @@ data class LoginModel(var username: String = "", var password: String = "") {
     }
 
     fun isCorrect(): Boolean {
-        return username.isNotEmpty() && password.isNotEmpty()
+        return login.isNotEmpty() && password.isNotEmpty()
     }
 
 }

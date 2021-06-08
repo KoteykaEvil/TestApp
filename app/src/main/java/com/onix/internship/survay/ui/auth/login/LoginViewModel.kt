@@ -49,12 +49,15 @@ class LoginViewModel(private val database: SurvayDatabase, private val sharedPre
                     password = model.password
                 ), database
             )
-            if(res.index >= 0) sharedPrefs.saveToSharedPrefs(model.login,model.password)
-            when (res) {
-                Roles.ADMIN -> _navigationEvent.postValue(AuthFragmentDirections.actionAuthFragmentToAdminFragment())
-                Roles.MANAGER -> _navigationEvent.postValue(AuthFragmentDirections.actionAuthFragmentToTestListFragment())
-                Roles.USER -> _navigationEvent.postValue(AuthFragmentDirections.actionAuthFragmentToTestListFragment())
-                else -> incorrectLoginOrPassword() // problem with registration or incorrect data
+            if (res == Roles.DEFAULT) {
+                incorrectLoginOrPassword()
+            } else {
+                sharedPrefs.saveToSharedPrefs(model.login, model.password)
+                when (res) {
+                    Roles.ADMIN -> _navigationEvent.postValue(AuthFragmentDirections.actionAuthFragmentToAdminFragment())
+                    Roles.MANAGER -> _navigationEvent.postValue(AuthFragmentDirections.actionAuthFragmentToTestListFragment())
+                    else -> _navigationEvent.postValue(AuthFragmentDirections.actionAuthFragmentToTestListFragment())
+                }
             }
         }
     }
